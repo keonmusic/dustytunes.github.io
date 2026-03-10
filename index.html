@@ -52,9 +52,11 @@
     }
 
     audio {
-        width: 100%;
-        margin-top: 10px;
-    }
+    width: 100%;
+    height: auto;       /* lets iOS use the correct player height */
+    margin: 10px 0 20px; /* top 10px, bottom 20px to avoid clipping */
+    display: block;      /* ensures proper layout on mobile */
+}
 
     footer {
         margin-top: 60px;
