@@ -1,17 +1,18 @@
 <style>
 body {
     font-family: Arial;
-    background: #000000;
-    color: #66cdaa; /* greenish-aqua, still HTML friendly */
-    text-align: center;
+    background: #000;
+    color: #66cdaa; /* greenish-aqua */
     margin: 0;
 }
 
+/* Header */
 header {
     padding: 60px 20px;
     background-image: url("Lonely Tree 2.png");
     background-size: cover;
     background-position: center;
+    text-align: center;
 }
 
 h1 {
@@ -20,24 +21,24 @@ h1 {
 }
 
 .tagline {
-    color: #000000;
+    color: #000;
     margin-top: 10px;
 }
 
+/* Sections with full-width background */
 section {
     width: 100%;
-    padding: 40px 20px;
-    background-image: url("R hologram background.png");
+    padding: 40px 0; /* remove side padding so background spans edge to edge */
     background-size: cover;
     background-position: center;
-    margin: 0;
 }
 
-/* New wrapper for content to keep it centered and narrow */
+/* Centered, narrow content inside sections */
 .section-content {
-    max-width: 800px; /* controls width in the centre */
-    margin: 0 auto; /* centres the content */
-    text-align: left; /* optional, for a cleaner look */
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px; /* optional padding inside narrow content */
+    text-align: center;
 }
 
 .track {
@@ -45,7 +46,7 @@ section {
 }
 
 audio {
-    width: 100%; /* now constrained by the .section-content */
+    width: 100%;
     margin-top: 10px;
 }
 
