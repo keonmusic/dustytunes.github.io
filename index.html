@@ -48,15 +48,16 @@
     }
 
     .track {
-        margin-bottom: 35px;
+        margin-bottom: 50px; /* extra space so iOS audio isn't cut off */
     }
 
     audio {
-    width: 100%;
-    height: auto;       /* lets iOS use the correct player height */
-    margin: 10px 0 20px; /* top 10px, bottom 20px to avoid clipping */
-    display: block;      /* ensures proper layout on mobile */
-}
+        width: 100%;  /* full width inside container */
+        max-width: 100%;
+        margin-top: 10px;
+        margin-bottom: 20px;
+        /* DO NOT set height or display */
+    }
 
     footer {
         margin-top: 60px;
@@ -72,9 +73,7 @@
     p {
         line-height: 1.6;
     }
-    
   </style>
-  
 </head>
 
 <body>
