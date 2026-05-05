@@ -1,142 +1,497 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <title>Keon Wu | Film Composer</title>
   <link rel="icon" type="image/png" href="R hologram nobackground.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Rajdhani:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #000;
-        color: #66cdaa; /* greenish-aqua */
-        margin: 0;
+    :root {
+      --aqua: #66cdaa;
+      --aqua-dim: #3d8a72;
+      --aqua-faint: rgba(102,205,170,0.08);
+      --aqua-border: rgba(102,205,170,0.2);
+      --black: #000;
+      --dark: #080808;
+      --mid: #111;
+      --muted: #555;
+      --white: #e8e8e8;
     }
 
-    /* Header */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--black);
+      color: var(--aqua);
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
     header {
-        padding: 60px 20px;
-        background-image: url("Lonely Tree 2.png");
-        background-size: cover;
-        background-position: center;
-        text-align: center;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background-image: url("Lonely Tree 2.png");
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.55) 60%, rgba(0,0,0,0.95) 100%);
+    }
+
+    .header-inner {
+      position: relative;
+      z-index: 1;
+      padding: 40px 20px;
+      animation: fadeUp 1.2s ease both;
+    }
+
+    .header-eyebrow {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--aqua-dim);
+      margin-bottom: 20px;
     }
 
     h1 {
-        font-size: 42px;
-        margin: 0;
-        color: #000000;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 9vw, 96px);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+
+    h1 span {
+      color: var(--aqua);
+      font-style: italic;
     }
 
     .tagline {
-        color: #000;
-        margin-top: 10px;
+      margin-top: 18px;
+      font-size: 12px;
+      letter-spacing: 8px;
+      text-transform: uppercase;
+      color: rgba(102,205,170,0.6);
+      font-weight: 300;
     }
 
-    /* Sections with full-width background */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--aqua-dim);
+      text-transform: uppercase;
+      animation: pulse 2.5s ease-in-out infinite;
+    }
+
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--aqua-dim), transparent);
+    }
+
+    /* ── SECTION BASE ── */
     section {
-        width: 100%;
-        padding: 40px 0; /* vertical padding only */
-        background-size: cover;
-        background-position: center;
-        text-align: center;
+      padding: 80px 20px;
+      border-top: 1px solid var(--aqua-border);
     }
 
-    /* Centered, narrow content inside sections */
     .section-content {
-        max-width: 800px; /* width in centre */
-        margin: 0 auto;
-        padding: 0 20px; /* small side padding */
+      max-width: 820px;
+      margin: 0 auto;
     }
 
-    .track {
-        margin-bottom: 50px; /* extra space so iOS audio isn't cut off */
-    }
-
-    audio {
-        width: 100%;  /* full width inside container */
-        max-width: 100%;
-        margin-top: 10px;
-        margin-bottom: 20px;
-        /* DO NOT set height or display */
-    }
-
-    footer {
-        margin-top: 60px;
-        padding: 30px;
-        background: #111;
-        color: #777;
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--aqua-dim);
+      margin-bottom: 10px;
     }
 
     h2 {
-        margin-bottom: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 40px;
+      letter-spacing: -0.5px;
     }
 
-    p {
-        line-height: 1.6;
+    /* ── TRACKS ── */
+    #tracks {
+      background: var(--dark);
+    }
+
+    .track {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--aqua-border);
+    }
+
+    .track:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .track-title {
+      font-size: 15px;
+      letter-spacing: 1px;
+      color: var(--aqua);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .track-meta {
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    audio {
+      width: 100%;
+      height: 36px;
+      accent-color: var(--aqua);
+    }
+
+    audio::-webkit-media-controls-panel {
+      background: #111;
+    }
+
+    /* ── VIDEO ── */
+    #video {
+      background: var(--black);
+    }
+
+    .video-label {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--aqua-dim);
+      border: 1px solid var(--aqua-border);
+      padding: 4px 10px;
+      margin-bottom: 16px;
+    }
+
+    .video-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 3vw, 30px);
+      font-weight: 300;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .video-desc {
+      font-size: 13px;
+      letter-spacing: 1px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .video-wrap {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      border: 1px solid var(--aqua-border);
+    }
+
+    .video-wrap iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--dark);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .about-bio p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+
+    .about-bio p strong {
+      color: var(--aqua);
+      font-weight: 500;
+    }
+
+    .skills-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .skills-list li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--aqua-dim);
+    }
+
+    .skills-list li::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--aqua-dim);
+      flex-shrink: 0;
+    }
+
+    .credits-block {
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--aqua-border);
+    }
+
+    .credit-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(102,205,170,0.07);
+      font-size: 13px;
+    }
+
+    .credit-name { color: var(--white); }
+    .credit-role { color: var(--muted); letter-spacing: 2px; font-size: 11px; text-transform: uppercase; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--black);
+      text-align: center;
+    }
+
+    #contact h2 { margin-bottom: 16px; }
+
+    #contact p {
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 32px;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      color: var(--aqua);
+      text-decoration: none;
+      border-bottom: 1px solid var(--aqua-dim);
+      padding-bottom: 4px;
+      transition: color 0.2s, border-color 0.2s;
+      letter-spacing: 1px;
+    }
+
+    .contact-email:hover {
+      color: var(--white);
+      border-color: var(--white);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 20px;
+      background: #050505;
+      border-top: 1px solid var(--aqua-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; }
     }
   </style>
 </head>
-
 <body>
 
+<!-- HEADER -->
 <header>
-  <h1>Keon Wu | Composer</h1>
-  <p class="tagline">| Film | Game | TV | Cinematic |</p>
+  <div class="header-inner">
+    <p class="header-eyebrow">Sydney, Australia</p>
+    <h1>Keon <span>Wu</span></h1>
+    <p class="tagline">Film &nbsp;·&nbsp; Game &nbsp;·&nbsp; TV &nbsp;·&nbsp; Cinematic</p>
+  </div>
+  <div class="scroll-hint">Listen</div>
 </header>
 
-<section style="background-image: url('R hologram background.png');">
+<!-- DEMO TRACKS -->
+<section id="tracks">
   <div class="section-content">
+    <p class="section-label">Selected Works</p>
     <h2>Demo Tracks</h2>
 
     <div class="track">
-      <p>After the Pain (main soundtrack)</p>
+      <p class="track-title">Heroes on the Horizon</p>
+      <p class="track-meta">Original composition</p>
+      <audio controls>
+        <source src="Heroes on the Horizon.mp3" type="audio/mpeg">
+      </audio>
+    </div>
+
+    <div class="track">
+      <p class="track-title">After the Pain — Main Theme</p>
+      <p class="track-meta">Original soundtrack</p>
       <audio controls>
         <source src="Above the Pain.mp3" type="audio/mpeg">
       </audio>
     </div>
 
     <div class="track">
-      <p>Credits (from After the Pain)</p>
+      <p class="track-title">After the Pain — Credits</p>
+      <p class="track-meta">Original soundtrack</p>
       <audio controls>
         <source src="AtP Credits.mp3" type="audio/mpeg">
       </audio>
     </div>
 
     <div class="track">
-      <p>Sci-Fi Atmosphere experiment</p>
+      <p class="track-title">STRAYLIGHT</p>
+      <p class="track-meta">Sci-fi atmosphere</p>
       <audio controls>
         <source src="STRAYLIGHT.mp3" type="audio/mpeg">
       </audio>
     </div>
+
   </div>
 </section>
 
-  <section style="background-image: url('R hologram background.png');">
+<!-- VIDEO -->
+<section id="video">
   <div class="section-content">
-    <h2>World of Tanks: HEAT trailer [RESCORED]</h2>
-
-  <iframe width="560" height="315" src="https://www.youtube.com/embed/qJV2Znht2Jk?si=0iMbimwQaInq2fdE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <span class="video-label">Rescored</span>
+    <p class="video-title">World of Tanks: HEAT Trailer</p>
+    <p class="video-desc">Original trailer rescored with a custom orchestral composition</p>
+    <div class="video-wrap">
+      <iframe src="https://www.youtube.com/embed/qJV2Znht2Jk?si=0iMbimwQaInq2fdE"
+        title="World of Tanks HEAT trailer rescored by Keon Wu"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
   </div>
 </section>
 
-<section style="background-image: url('R hologram background.png');">
+<!-- ABOUT -->
+<section id="about">
   <div class="section-content">
-    <h2>About</h2>
-    <p>
-      I'm Keon, an aspiring composer, and I love writing music. Ever since I was little, I always imagined my music being used in films, and I hope to turn that dream into a reality. 
-      I have a versatility and adaptability for any environment and story, and have experience with composing as well as producing, mixing, and mastering.
-    </p>
+    <p class="section-label">About</p>
+    <h2>Keon Wu</h2>
+
+    <div class="about-grid">
+      <div class="about-bio">
+        <p>
+          Keon Wu is a <strong>Sydney-based composer</strong> specialising in film, games, television, and cinematic media. His work spans orchestral drama, sci-fi atmosphere, and emotional storytelling — shaped by a lifelong obsession with how music transforms a scene.
+        </p>
+        <p>
+          Beyond composition, Keon handles the full production chain — writing, producing, mixing, and mastering — bringing a singular creative vision from first note to final delivery.
+        </p>
+
+        <div class="credits-block">
+          <p class="section-label" style="margin-bottom:16px;">Credits</p>
+          <div class="credit-item">
+            <span class="credit-name">After the Pain</span>
+            <span class="credit-role">Original Soundtrack</span>
+          </div>
+          <div class="credit-item">
+            <span class="credit-name">World of Tanks: HEAT</span>
+            <span class="credit-role">Rescore</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="width:100%;aspect-ratio:1/1;overflow:hidden;margin-bottom:32px;border:1px solid var(--aqua-border);">
+          <img src="Tree 2.png" alt="Keon Wu" style="width:100%;height:100%;object-fit:cover;object-position:center;">
+        </div>
+        <p class="section-label" style="margin-bottom:20px;">Capabilities</p>
+        <ul class="skills-list">
+          <li>Orchestral Composition</li>
+          <li>Hybrid Electronic Scoring</li>
+          <li>Sci-Fi &amp; Atmospheric</li>
+          <li>Music Production</li>
+          <li>Mixing &amp; Mastering</li>
+          <li>Writing to Picture</li>
+        </ul>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<section style="background-image: url('R hologram background.png');">
+<!-- CONTACT -->
+<section id="contact">
   <div class="section-content">
-    <h2>Contact</h2>
-    <p>Email: keon@rogueindustries.au</p>
+    <p class="section-label">Get in Touch</p>
+    <h2>Work Together</h2>
+    <p>Available for film, game, TV, and sync projects.</p>
+    <a class="contact-email" href="mailto:keon@rogueindustries.au">keon@rogueindustries.au</a>
   </div>
 </section>
 
 <footer>
-  © Rogue Industries 2026
+  <span>© Rogue Industries 2026</span>
+  <span>Keon Wu — Film Composer</span>
 </footer>
 
 </body>
