@@ -31,7 +31,7 @@
     /* ── HEADER ── */
     header {
       position: relative;
-      min-height: 100vh;
+      min-height: 65vh;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -162,30 +162,138 @@
       padding-bottom: 0;
     }
 
+    .track-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+
     .track-title {
-      font-size: 15px;
+      font-size: 17px;
       letter-spacing: 1px;
       color: var(--aqua);
-      margin-bottom: 6px;
       font-weight: 500;
+      margin: 0;
     }
 
     .track-meta {
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--aqua-dim);
       text-transform: uppercase;
-      margin-bottom: 12px;
+      border: 1px solid var(--aqua-border);
+      padding: 2px 8px;
+      margin: 0;
     }
 
-    audio {
-      width: 100%;
+    /* ── CUSTOM PLAYER ── */
+    .holo-player {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid var(--aqua-border);
+      padding: 10px 16px;
+      backdrop-filter: blur(6px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .holo-player::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(102,205,170,0.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .holo-btn {
+      width: 36px;
       height: 36px;
-      accent-color: var(--aqua);
+      border: 1px solid var(--aqua);
+      background: transparent;
+      color: var(--aqua);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
     }
 
-    audio::-webkit-media-controls-panel {
-      background: #111;
+    .holo-btn:hover {
+      background: rgba(102,205,170,0.15);
+    }
+
+    .holo-btn svg { width: 14px; height: 14px; fill: currentColor; }
+
+    .holo-scrubber-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .holo-bar {
+      position: relative;
+      height: 3px;
+      background: rgba(102,205,170,0.15);
+      cursor: pointer;
+    }
+
+    .holo-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(to right, #3d8a72, #66cdaa);
+      transition: width 0.1s linear;
+      position: relative;
+    }
+
+    .holo-bar-fill::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 8px;
+      height: 8px;
+      background: var(--aqua);
+      clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    }
+
+    .holo-times {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--aqua-dim);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .holo-vol {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .holo-vol svg { width: 14px; height: 14px; fill: var(--aqua-dim); }
+
+    .holo-vol-bar {
+      width: 60px;
+      height: 3px;
+      background: rgba(102,205,170,0.15);
+      cursor: pointer;
+      position: relative;
+    }
+
+    .holo-vol-fill {
+      height: 100%;
+      width: 80%;
+      background: var(--aqua-dim);
     }
 
     /* ── VIDEO ── */
@@ -384,35 +492,91 @@
     <h2>Demo Tracks</h2>
 
     <div class="track">
-      <p class="track-title">Heroes on the Horizon</p>
-      <p class="track-meta">Original composition</p>
-      <audio controls>
-        <source src="Heroes on the Horizon.mp3" type="audio/mpeg">
-      </audio>
+      <div class="track-header">
+        <p class="track-title">Heroes on the Horizon</p>
+        <p class="track-meta">Original composition</p>
+      </div>
+      <div class="holo-player" data-src="Heroes on the Horizon.mp3">
+        <button class="holo-btn play-btn" aria-label="Play">
+          <svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg>
+        </button>
+        <div class="holo-scrubber-wrap">
+          <div class="holo-bar">
+            <div class="holo-bar-fill"></div>
+          </div>
+          <div class="holo-times"><span class="time-cur">0:00</span><span class="time-total">0:00</span></div>
+        </div>
+        <div class="holo-vol">
+          <svg viewBox="0 0 16 16"><path d="M3 5H0v6h3l5 4V1L3 5zm10.5 3a4.5 4.5 0 0 0-3-4.24v8.48A4.5 4.5 0 0 0 13.5 8z"/></svg>
+          <div class="holo-vol-bar"><div class="holo-vol-fill"></div></div>
+        </div>
+      </div>
     </div>
 
     <div class="track">
-      <p class="track-title">After the Pain — Main Theme</p>
-      <p class="track-meta">Original soundtrack</p>
-      <audio controls>
-        <source src="Above the Pain.mp3" type="audio/mpeg">
-      </audio>
+      <div class="track-header">
+        <p class="track-title">After the Pain — Main Theme</p>
+        <p class="track-meta">Original soundtrack</p>
+      </div>
+      <div class="holo-player" data-src="Above the Pain.mp3">
+        <button class="holo-btn play-btn" aria-label="Play">
+          <svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg>
+        </button>
+        <div class="holo-scrubber-wrap">
+          <div class="holo-bar">
+            <div class="holo-bar-fill"></div>
+          </div>
+          <div class="holo-times"><span class="time-cur">0:00</span><span class="time-total">0:00</span></div>
+        </div>
+        <div class="holo-vol">
+          <svg viewBox="0 0 16 16"><path d="M3 5H0v6h3l5 4V1L3 5zm10.5 3a4.5 4.5 0 0 0-3-4.24v8.48A4.5 4.5 0 0 0 13.5 8z"/></svg>
+          <div class="holo-vol-bar"><div class="holo-vol-fill"></div></div>
+        </div>
+      </div>
     </div>
 
     <div class="track">
-      <p class="track-title">After the Pain — Credits</p>
-      <p class="track-meta">Original soundtrack</p>
-      <audio controls>
-        <source src="AtP Credits.mp3" type="audio/mpeg">
-      </audio>
+      <div class="track-header">
+        <p class="track-title">After the Pain — Credits</p>
+        <p class="track-meta">Original soundtrack</p>
+      </div>
+      <div class="holo-player" data-src="AtP Credits.mp3">
+        <button class="holo-btn play-btn" aria-label="Play">
+          <svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg>
+        </button>
+        <div class="holo-scrubber-wrap">
+          <div class="holo-bar">
+            <div class="holo-bar-fill"></div>
+          </div>
+          <div class="holo-times"><span class="time-cur">0:00</span><span class="time-total">0:00</span></div>
+        </div>
+        <div class="holo-vol">
+          <svg viewBox="0 0 16 16"><path d="M3 5H0v6h3l5 4V1L3 5zm10.5 3a4.5 4.5 0 0 0-3-4.24v8.48A4.5 4.5 0 0 0 13.5 8z"/></svg>
+          <div class="holo-vol-bar"><div class="holo-vol-fill"></div></div>
+        </div>
+      </div>
     </div>
 
     <div class="track">
-      <p class="track-title">STRAYLIGHT</p>
-      <p class="track-meta">Sci-fi atmosphere</p>
-      <audio controls>
-        <source src="STRAYLIGHT.mp3" type="audio/mpeg">
-      </audio>
+      <div class="track-header">
+        <p class="track-title">STRAYLIGHT</p>
+        <p class="track-meta">Sci-fi atmosphere</p>
+      </div>
+      <div class="holo-player" data-src="STRAYLIGHT.mp3">
+        <button class="holo-btn play-btn" aria-label="Play">
+          <svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg>
+        </button>
+        <div class="holo-scrubber-wrap">
+          <div class="holo-bar">
+            <div class="holo-bar-fill"></div>
+          </div>
+          <div class="holo-times"><span class="time-cur">0:00</span><span class="time-total">0:00</span></div>
+        </div>
+        <div class="holo-vol">
+          <svg viewBox="0 0 16 16"><path d="M3 5H0v6h3l5 4V1L3 5zm10.5 3a4.5 4.5 0 0 0-3-4.24v8.48A4.5 4.5 0 0 0 13.5 8z"/></svg>
+          <div class="holo-vol-bar"><div class="holo-vol-fill"></div></div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -497,5 +661,74 @@
   <span>Keon Wu — Film Composer</span>
 </footer>
 
+<script>
+  function fmt(s) {
+    if (isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+    return m + ':' + String(sec).padStart(2, '0');
+  }
+
+  document.querySelectorAll('.holo-player').forEach(player => {
+    const audio = new Audio(player.dataset.src);
+    const btn = player.querySelector('.play-btn');
+    const fill = player.querySelector('.holo-bar-fill');
+    const bar = player.querySelector('.holo-bar');
+    const cur = player.querySelector('.time-cur');
+    const total = player.querySelector('.time-total');
+    const volBar = player.querySelector('.holo-vol-bar');
+    const volFill = player.querySelector('.holo-vol-fill');
+
+    const playIcon = `<svg viewBox="0 0 16 16"><polygon points="3,1 15,8 3,15"/></svg>`;
+    const pauseIcon = `<svg viewBox="0 0 16 16"><rect x="2" y="1" width="4" height="14"/><rect x="10" y="1" width="4" height="14"/></svg>`;
+
+    audio.volume = 0.8;
+
+    audio.addEventListener('loadedmetadata', () => { total.textContent = fmt(audio.duration); });
+
+    audio.addEventListener('timeupdate', () => {
+      const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+      fill.style.width = pct + '%';
+      cur.textContent = fmt(audio.currentTime);
+    });
+
+    audio.addEventListener('ended', () => {
+      btn.innerHTML = playIcon;
+      fill.style.width = '0%';
+      cur.textContent = '0:00';
+    });
+
+    btn.addEventListener('click', () => {
+      if (audio.paused) {
+        // pause all others
+        document.querySelectorAll('.holo-player').forEach(p => {
+          if (p !== player) {
+            p._audio && p._audio.pause();
+            p.querySelector('.play-btn').innerHTML = playIcon;
+          }
+        });
+        audio.play();
+        btn.innerHTML = pauseIcon;
+      } else {
+        audio.pause();
+        btn.innerHTML = playIcon;
+      }
+    });
+
+    bar.addEventListener('click', e => {
+      const rect = bar.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      audio.currentTime = pct * audio.duration;
+    });
+
+    volBar.addEventListener('click', e => {
+      const rect = volBar.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      audio.volume = pct;
+      volFill.style.width = (pct * 100) + '%';
+    });
+
+    player._audio = audio;
+  });
+</script>
 </body>
 </html>
